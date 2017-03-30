@@ -11,6 +11,7 @@
     "express": "^4.15.2",
     "express-handlebars": "^3.0.0",
     "express-session": "^1.15.1",
+    "method-override": "^2.3.8",
     "mysql": "^2.13.0",
     "path": "^0.12.7",
     "petfinder": "^0.1.1",
