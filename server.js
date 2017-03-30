@@ -3,7 +3,7 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var methodOverride = require('method-override');
 //bcrypt used for validaton
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 var path = require('path')
 //cookieParser and session used for session tokens
 var cookieParser = require('cookie-parser');
