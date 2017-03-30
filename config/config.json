@@ -1,0 +1,29 @@
+{
+    "development": {
+        "username": "root",
+        "password": "Kainer2305!",
+
+        "database": "pets_development",
+        "host": "127.0.0.1",
+        "dialect": "mysql"
+    },
+    "nahir": {
+        "username": "root",
+        "password": "mypassword",
+        "database": "pets_development",
+        "host": "127.0.0.1",
+        "port": 3306,
+        "dialect": "mysql"
+    },
+    "test": {
+        "username": "root",
+        "password": "UNCCrugby_49",
+        "database": "pets_development",
+        "host": "127.0.0.1",
+        "dialect": "mysql"
+    },
+    "production": {
+        "use_env_variable": "JAWSDB_URL",
+        "dialect": "mysql"
+    }
+}
