@@ -15,6 +15,7 @@ const API = {
         //Slice the first letter of the gender (M or F) as that is all that is needed to query the api 
         let animalSex = params.gender.slice(0, 1);
         let zip = params.zip;
+        console.log('DATA TO THE FIND ANIMALS')
         console.log(animalType, animalAge, animalSex, zip, params.username, params.id)
             //Difference between age and size? why is size hardcoded
 
@@ -51,8 +52,8 @@ const API = {
 
 
     },
- 
-   //reciev an array of ID's
+
+    //reciev an array of ID's
     findfav(arrayOfFavs, cb) {
 
         var ObjectMaintoCB = []
@@ -64,7 +65,7 @@ const API = {
                 reduceArray(array)
 
             } else {
-                return reduceArray
+                return array
             }
 
         }
@@ -73,8 +74,12 @@ const API = {
             //find each pet by id and send it to array with return! 
 
             petfinder.getPet(element, {}, function(err, breeds) {
-                if (!breeds) {
-
+                try {
+                    throw 'I am a tea pot and dint know how to code!'; // generates an exception
+                } catch (e) {
+                    // statements to handle any exceptions
+                    //logMyErrors(e); // pass exception object to error handler
+                    console.log(e)
                 }
                 console.log('Bugssss')
                 let pet = {
@@ -108,6 +113,3 @@ const API = {
 
 
 module.exports = API;
-
-
-

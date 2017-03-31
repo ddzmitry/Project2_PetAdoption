@@ -137,13 +137,13 @@ router.get('/foundAnimals/:username', (req, res) => {
         }).then(function(data) {
 
             var params = data.dataValues
-
-            //call findAnimals from within /routes/animalSearchFunction.js
+            console.log('PARAMS FROM FOUND ANIMALS DB' + " " + params)
+                //call findAnimals from within /routes/animalSearchFunction.js
             apiMain.findAminals(params, function(data) {
                 //nh: function(data)=cb in animalSearchFunction.js
 
                 console.log('FUNN')
-                console.log(data);
+                    // console.log(data);
                 var userobj = {
                     username: params.username,
                     userid: params.id
@@ -291,14 +291,15 @@ router.post('/search/:username', (req, res) => {
         console.log(req.params.username)
         console.log('BODY')
         console.log(req.body)
-
-        var newzip = zipcode.lookup(req.body.zip);
+        var zip = req.body.zip.trim()
+        console.log('THIS IS ZIP ' + ' ' + zip)
+        var newzip = zipcode.lookup(zip);
         if (newzip == null) {
             console.log("zip is invalid");
             return
         }
 
-        db.User.update({ zip: req.body.zip, animal: req.body.animalType, age: req.body.animalAge, gender: req.body.animalSex }, {
+        db.User.update({ zip: zip, animal: req.body.animalType, age: req.body.animalAge, gender: req.body.animalSex }, {
             where: { username: req.params.username }
         }).then(function(result) {
             res.redirect(`/foundAnimals/${req.params.username}`)
