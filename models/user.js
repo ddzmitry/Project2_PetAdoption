@@ -43,7 +43,7 @@ module.exports = function(sequelize, DataTypes) {
 
         },
         zip: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             allowNull: true,
             validate: {
                 len: [5, 5],

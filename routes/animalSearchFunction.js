@@ -1,7 +1,7 @@
 //This code handles our API query
 const express = require("express");
 const router = express.Router();
-var petfinder = require('petfinder')('357d4a946c3d94988341843dbe6abed5', '6b28ab1dc3723180ab6a01aa0491b5fe');
+var petfinder = require('petfinder')('d9fef56b9ddab7a97e72e53d5ac6fe30', '4b44d9d627a82b811c3986f75db408f8');
 var chalk = require('chalk');
 
 const API = {
@@ -64,7 +64,7 @@ const API = {
                 reduceArray(array)
 
             } else {
-                return reduceArray
+                return array
             }
 
         }
