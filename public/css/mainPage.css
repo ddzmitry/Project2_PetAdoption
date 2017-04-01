@@ -52,8 +52,8 @@ sans-serif;*/
 @media (max-width: 736px) {
     .adaption {
         font-family: 'Gabriela';
-        font-size: 24px;
-        margin-bottom: -210px;
+        font-size: 23px;
+        margin-bottom: 31px;
     }
     .logo {
         opacity: 0.9;

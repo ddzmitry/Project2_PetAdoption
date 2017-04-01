@@ -36,7 +36,9 @@
 
     <div class="row main">
         <div class="main-login main-center text-center">
-
+                            {{#if badZip}}
+                            <h3>{{badZip}}</h3>
+                            {{/if}}
             <h5>Animal Search for {{data.username}}</h5>
             <form class="" method="POST" action="/search/{{data.username}}">
 

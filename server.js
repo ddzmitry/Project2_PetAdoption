@@ -8,7 +8,7 @@ var path = require('path')
     //cookieParser and session used for session tokens
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
-
+var flash = require('express-flash');
 // Sets up the Express App
 // =============================================================
 var app = express();
@@ -22,8 +22,9 @@ app.use(session({
     saveUninitialized: true
 }));
 app.use(cookieParser());
+app.use(flash());
 //Deploy in current environment or 8080
-var PORT = process.env.PORT || 8080;
+var PORT = process.env.PORT || 7000;
 
 
 // Requiring our models for syncing

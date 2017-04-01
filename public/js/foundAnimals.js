@@ -3,7 +3,7 @@ $(document).ready(function() {
     $('.foundAnimsLogo').circleType({ radius: 384 });
 
     $('.logo').on('click', () => {
-        console.log('hello')
+        // console.log('hello')
 
     })
     $('.logo').on('mouseover', () => {

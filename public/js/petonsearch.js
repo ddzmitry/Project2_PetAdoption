@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    console.log('ready');
+    // console.log('ready');
 
     $('.myBtn').on('click', function(e) {
 
@@ -18,5 +18,5 @@ $(document).ready(function() {
         $(".myModal").css("display", "none")
     })
 
-  
+
 })

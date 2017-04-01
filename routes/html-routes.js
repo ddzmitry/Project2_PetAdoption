@@ -10,6 +10,12 @@ var chalk = require('chalk');
 
 //=================GET ROUTES========================================
 
+router.get('/flash', function(req, res) {
+    // Set a flash message by passing the key, followed by the value, to req.flash().
+    req.flash('info', 'Welcome!')
+    req.flash('badZip', 'Zip is incorrect!')
+    res.redirect('/');
+});
 //once the person logs out we close their session! 
 router.get('/logout', function(req, res) {
 
@@ -22,8 +28,7 @@ router.get('/logout', function(req, res) {
 
 //home.handlebars handler 
 router.get('/', (req, res) => {
-
-    res.render(path.join(__dirname, "/../views/home.handlebars"));
+    res.render('home', { message: req.flash('info') })
 
 });
 
@@ -55,8 +60,8 @@ router.get('/login', (req, res) => {
 
 //animalSearch.handlbars handler
 router.get('/search/:username', (req, res) => {
-    console.log('I WAS SEARCHING')
-    console.log(req.params.username);
+    // console.log('I WAS SEARCHING')
+    // console.log(req.params.username);
 
 
     //Search page only accessible to users who have logged in
@@ -68,7 +73,7 @@ router.get('/search/:username', (req, res) => {
         }).then(function(data) {
             //note: must use data.dataValues rather than simply "data"
             var params = data.dataValues
-            console.log(params)
+                // console.log(params)
                 //nb: render requires you have a handle
             res.render('animalSearch', { data: params });
         })
@@ -137,13 +142,12 @@ router.get('/foundAnimals/:username', (req, res) => {
         }).then(function(data) {
 
             var params = data.dataValues
-            console.log('PARAMS FROM FOUND ANIMALS DB' + " " + params)
+                // console.log('PARAMS FROM FOUND ANIMALS DB' + " " + params)
                 //call findAnimals from within /routes/animalSearchFunction.js
             apiMain.findAminals(params, function(data) {
                 //nh: function(data)=cb in animalSearchFunction.js
 
-                console.log('FUNN')
-                    // console.log(data);
+                // console.log(data);
                 var userobj = {
                     username: params.username,
                     userid: params.id
@@ -162,8 +166,8 @@ router.get('/foundAnimals/:username', (req, res) => {
 //Allows removal of individual favorites:
 router.delete('/favorites/:userId/:userName/:petid', (req, res) => {
 
-    console.log(req.params)
-    console.log('DESTROY')
+    // console.log(req.params)
+    // console.log('DESTROY')
     db.Favorites.destroy({
         animalID: req.params.petid,
         where: {
@@ -254,8 +258,8 @@ router.post("/login", function(req, res) {
         }
     }).then(function(data) {
         if (data) {
-            console.log('DATA FROM LOGIN')
-            console.log(data.dataValues)
+            // console.log('DATA FROM LOGIN')
+            // console.log(data.dataValues)
             if (bcrypt.compareSync(req.body.password, data.dataValues.password)) {
                 //if statement takes care of async version of bcrypt.compare
 
@@ -275,11 +279,11 @@ router.post("/login", function(req, res) {
             } else {
 
                 res.render('login', { wrongData: 'Wrong Password!' })
-                console.log('Wrong Password');
+                    // console.log('Wrong Password');
             }
         } else {
             res.render('login', { wrongData: 'User does not exists!' })
-            console.log('User Does Not exists');
+                // console.log('User Does Not exists');
         }
     })
 });
@@ -288,15 +292,16 @@ router.post("/login", function(req, res) {
 router.post('/search/:username', (req, res) => {
     //Check Point
     if (req.session.logged_in && req.session.user_name == req.params.username) {
-        console.log(req.params.username)
-        console.log('BODY')
-        console.log(req.body)
+        // console.log(req.params.username)
+        // console.log('BODY')
+        // console.log(req.body)
         var zip = req.body.zip.trim()
         console.log('THIS IS ZIP ' + ' ' + zip)
         var newzip = zipcode.lookup(zip);
         if (newzip == null) {
+
             console.log("zip is invalid");
-            return
+            res.redirect(`/search/${req.params.username}`);
         }
 
         db.User.update({ zip: zip, animal: req.body.animalType, age: req.body.animalAge, gender: req.body.animalSex }, {
@@ -311,16 +316,16 @@ router.post('/search/:username', (req, res) => {
 router.post("/favAnimals", function(req, res) {
 
     var str = req.body.favorite;
-    console.log('req.body.favorite:');
-    console.log(req.body.favorite);
-    console.log('=============');
+    // console.log('req.body.favorite:');
+    // console.log(req.body.favorite);
+    // console.log('=============');
     var str2 = str.slice(str.indexOf("$") + 1);
     var petid = str.slice(0, str.indexOf("$"));
     var usrid = str2.slice(0, str2.indexOf("$"));
     var usrname = str2.slice(str2.indexOf("$") + 1);
-    console.log(`petid=${petid}`);
-    console.log(`usrid=${usrid}`);
-    console.log(`usrname=${usrname}`);
+    // console.log(`petid=${petid}`);
+    // console.log(`usrid=${usrid}`);
+    // console.log(`usrname=${usrname}`);
     var userid = parseInt(usrid);
 
     db.Favorites.findOne({
@@ -350,7 +355,7 @@ router.post("/favAnimals", function(req, res) {
 //================ If no matching route is found default to home====================
 router.use(function(req, res) {
 
-    res.render(path.join(__dirname, "/../views/home.handlebars"));
+    res.render('home', { hello: 'World' });
 });
 
 module.exports = router;
