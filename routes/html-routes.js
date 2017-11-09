@@ -112,6 +112,9 @@ router.get('/favorites/:username', (req, res) => {
 
                     let IDs = FavsData.map(favobject => `${favobject.animalID}`);
                     apiMain.findfav(IDs, function(FavsDataReturn) {
+                        
+                        console.log('FavsDataReturn')
+                        console.log(FavsDataReturn)
                         //with CB we have result as an array and we can render it on the page. 
                         favs = FavsDataReturn
                         res.render('petsOnSearch', { favs: favs, user: userobj });

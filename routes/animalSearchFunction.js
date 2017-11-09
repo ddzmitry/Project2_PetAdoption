@@ -8,6 +8,7 @@ const API = {
 
 
     findAminals: (params, cb) => {
+        console.log('rying to find')
         // console.log('PARAMS')
         // console.log(params);
         let animalType = params.animal.toLowerCase();
@@ -59,9 +60,8 @@ const API = {
         var ObjectMaintoCB = []
 
         function reduceArray(arrayOfFavs) {
-            if (arrayOfFavs.length > 7) {
+            if (arrayOfFavs.length > 5) {
                 arrayOfFavs.pop()
-                console.log(arrayOfFavs)
                 reduceArray(arrayOfFavs)
 
             } else {
@@ -70,36 +70,39 @@ const API = {
 
         }
         reduceArray(arrayOfFavs)
+
+          function Getpet(params,CB) {
+
+              petfinder.getPet(params,{}, function(err, breeds) {
+                
+
+                                let pet = {
+                                    petPicture: breeds.media.photos['1'].x,
+                                    description: breeds.description,
+                                    phone: breeds.contact.phone,
+                                    email: breeds.contact.email,
+                                    address: breeds.contact.address1,
+                                    petid: breeds.id, //good,passed to animalSearch.handlebars
+                                };
+                                    
+                                CB(pet)
+                        
+                                })
+            
+        }
+
         for (i = 0; i < arrayOfFavs.length; i++) {
-            //find each pet by id and send it to array with return! 
 
-            petfinder.getPet(arrayOfFavs[i], {}, function(err, breeds) {
-
-                // console.log('Bugssss')
-                let pet = {
-                    petPicture: breeds.media.photos['1'].x,
-                    description: breeds.description,
-                    phone: breeds.contact.phone,
-                    email: breeds.contact.email,
-                    address: breeds.contact.address1,
-                    petid: breeds.id, //good,passed to animalSearch.handlebars
-                };
-
-                // console.log(pet)
-                //return it
+            Getpet(arrayOfFavs[i],function(pet){
+                console.log(pet)
                 ObjectMaintoCB.push(pet)
-                if (ObjectMaintoCB.length == arrayOfFavs.length) {
-
-                    console.log('Favs retrieved, send to page');
-                    // send data back to routes
-                    cb(ObjectMaintoCB)
-                }
-
             })
 
-
-        };
-
+        }
+        setTimeout(function(){
+            cb(ObjectMaintoCB)
+        },1000)
+        
 
 
     }
